@@ -28,6 +28,9 @@ int main(void)
     srand(time(NULL));
     board_init(board);
     while (1) {
+        printf("%c %c %c\n", board[0], board[1], board[2]);
+        printf("%c %c %c\n", board[3], board[4], board[5]);
+        printf("%c %c %c\n", board[6], board[7], board[8]);
         if (board_is_full(board)) {
             exit(0);
         }
@@ -37,9 +40,15 @@ int main(void)
                 exit(1);
             }
             player_move_index = atoi(player_input_buffer);
-            if (player_move_index < BOARD_SIZE) {
-                board[atoi(player_input_buffer)] = BOARD_CHAR_PLAYER;
+            if (board[player_move_index] != BOARD_CHAR_EMPTY) {
+                printf("That space is already taken!\n");
+                continue;
             }
+            if (player_move_index >= BOARD_SIZE) {
+                printf("Not a valid move index!\n");
+                continue;
+            }
+            board[atoi(player_input_buffer)] = BOARD_CHAR_PLAYER;
             turn = TURN_COMPUTER;
         } else {
             do {
@@ -48,9 +57,6 @@ int main(void)
             board[computer_move_index] = BOARD_CHAR_COMPUTER;
             turn = TURN_PLAYER;
         }
-        printf("%c %c %c\n", board[0], board[1], board[2]);
-        printf("%c %c %c\n", board[3], board[4], board[5]);
-        printf("%c %c %c\n", board[6], board[7], board[8]);
     }
     return 0;
 }
